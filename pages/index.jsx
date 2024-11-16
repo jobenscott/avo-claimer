@@ -684,10 +684,10 @@ import { useEffect, useState } from 'react';
 import Web3 from 'web3';
 
 function App() {
-  const [web3, setWeb3] = useState<Web3 | null>(null);
-  const [connectedAccount, setConnectedAccount] = useState<string | null>(null);
-  const [isClaiming, setIsClaiming] = useState<boolean>(false);
-  const [message, setMessage] = useState<string | null>(null); // Message state
+  const [web3, setWeb3] = useState(null);
+  const [connectedAccount, setConnectedAccount] = useState(null);
+  const [isClaiming, setIsClaiming] = useState(false);
+  const [message, setMessage] = useState(null); // Message state
 
   const contractAddress = '0xE44c82aB05F70f172b92B7e253D0F1EDDC48A528';
   const contractABI = [
