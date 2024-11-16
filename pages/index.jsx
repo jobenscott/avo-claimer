@@ -1122,26 +1122,79 @@ function App() {
     }
   };
 
+  // const claimTokens = async () => {
+  //   if (!web3 || !connectedAccount) {
+  //     setMessage('Connect your wallet first.');
+  //     fadeMessage();
+  //     return;
+  //   }
+
+  //   try {
+  //     setIsClaiming(true);
+  //     const contract = new web3.eth.Contract(contractABI, contractAddress);
+  //     await contract.methods.claim().send({ from: connectedAccount });
+  //     setMessage('Tokens claimed successfully!');
+  //   } catch (error) {
+  //     console.error('Error claiming tokens:', error);
+  //     setMessage('Error claiming tokens. Check the console for details.');
+  //   } finally {
+  //     setIsClaiming(false);
+  //     fadeMessage();
+  //   }
+  // };
   const claimTokens = async () => {
     if (!web3 || !connectedAccount) {
       setMessage('Connect your wallet first.');
       fadeMessage();
       return;
     }
-
+  
     try {
       setIsClaiming(true);
       const contract = new web3.eth.Contract(contractABI, contractAddress);
-      await contract.methods.claim().send({ from: connectedAccount });
-      setMessage('Tokens claimed successfully!');
+  
+      if (window.ethereum) {
+        // Use MetaMask to send transaction
+        await contract.methods.claim().send({ from: connectedAccount });
+        setMessage('Tokens claimed successfully via MetaMask!');
+      } else {
+        // Use Flow RPC for raw transaction
+        const data = contract.methods.claim().encodeABI();
+  
+        const tx = {
+          to: contractAddress,
+          data,
+          gas: 2000000,
+          from: connectedAccount,
+        };
+  
+        // Replace this with secure signing of the private key
+        const privateKey = "YOUR_PRIVATE_KEY"; // Store securely in production
+        if (!privateKey) {
+          setMessage('Private key is required to sign the transaction.');
+          fadeMessage();
+          return;
+        }
+  
+        const signedTx = await web3.eth.accounts.signTransaction(tx, privateKey);
+        const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+  
+        console.log('Transaction receipt:', receipt);
+        setMessage('Tokens claimed successfully via Flow RPC!');
+      }
     } catch (error) {
       console.error('Error claiming tokens:', error);
-      setMessage('Error claiming tokens. Check the console for details.');
+      if (error.message.includes('eth_sendTransaction')) {
+        setMessage('Flow RPC does not support this transaction method.');
+      } else {
+        setMessage('Error claiming tokens. Check the console for details.');
+      }
     } finally {
       setIsClaiming(false);
       fadeMessage();
     }
   };
+  
 
   const fadeMessage = () => {
     setTimeout(() => {
