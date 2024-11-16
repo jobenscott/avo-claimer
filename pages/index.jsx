@@ -700,6 +700,47 @@ function App() {
     },
   ];
 
+  // useEffect(() => {
+  //   const initializeWeb3 = async () => {
+  //     const RPC_URL = "https://mainnet.evm.nodes.onflow.org";
+  //     const CHAIN_ID = "0x2EB"; // Chain ID 747 in hexadecimal
+  
+  //     try {
+  //       if (window.ethereum) {
+  //         // Request to switch to the Flow EVM network if MetaMask is available
+  //         await window.ethereum.request({
+  //           method: "wallet_addEthereumChain",
+  //           params: [
+  //             {
+  //               chainId: CHAIN_ID,
+  //               chainName: "Flow EVM",
+  //               rpcUrls: [RPC_URL],
+  //               nativeCurrency: {
+  //                 name: "FLOW",
+  //                 symbol: "FLOW",
+  //                 decimals: 18,
+  //               },
+  //               blockExplorerUrls: ["https://evm.flowscan.io"],
+  //             },
+  //           ],
+  //         });
+  
+  //         setWeb3(new Web3(window.ethereum));
+  //         console.log("Web3 initialized using MetaMask.");
+  //       } else {
+  //         // Fallback to direct RPC for non-MetaMask users
+  //         const provider = new Web3.providers.HttpProvider(RPC_URL);
+  //         setWeb3(new Web3(provider));
+  //         console.log("Web3 initialized using direct RPC.");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error initializing Web3:", error);
+  //     }
+  //   };
+  
+  //   initializeWeb3();
+  // }, []);
+
   useEffect(() => {
     const initializeWeb3 = async () => {
       const RPC_URL = "https://mainnet.evm.nodes.onflow.org";
@@ -742,18 +783,61 @@ function App() {
   }, []);
   
   
+  
 
   async function connectWallet() {
-    if (!web3) return;
-
     try {
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
-      const accounts = await web3.eth.getAccounts();
-      setConnectedAccount(accounts[0]);
+      if (!web3) {
+        console.error("Web3 is not initialized. Make sure the network is set up correctly.");
+        return;
+      }
+  
+      if (window.ethereum) {
+        // Use MetaMask to request accounts
+        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+        if (accounts.length > 0) {
+          setConnectedAccount(accounts[0]);
+          console.log("Wallet connected:", accounts[0], accounts);
+        } else {
+          console.error("No accounts found.");
+        }
+      } else {
+        console.error("Ethereum provider not detected. Install MetaMask or use a compatible wallet.");
+      }
     } catch (error) {
-      console.error('Error connecting wallet:', error);
+      console.error("Error connecting wallet:", error);
     }
   }
+
+  async function switchToFlowNetwork() {
+    const FLOW_CHAIN_ID = "0x2EB"; // Chain ID 747 in hex
+    const RPC_URL = "https://mainnet.evm.nodes.onflow.org";
+  
+    try {
+      await window.ethereum.request({
+        method: "wallet_addEthereumChain",
+        params: [
+          {
+            chainId: FLOW_CHAIN_ID,
+            chainName: "Flow EVM",
+            rpcUrls: [RPC_URL],
+            nativeCurrency: {
+              name: "FLOW",
+              symbol: "FLOW",
+              decimals: 18,
+            },
+            blockExplorerUrls: ["https://evm.flowscan.io"],
+          },
+        ],
+      });
+  
+      console.log("Flow EVM network added or switched.");
+    } catch (error) {
+      console.error("Error adding/switching to Flow EVM network:", error);
+    }
+  }
+  
+  
 
   async function claimTokens() {
     if (!web3 || !connectedAccount) {
