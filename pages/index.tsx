@@ -1,115 +1,876 @@
-import Image from "next/image";
-import localFont from "next/font/local";
+// // // // // import { useEffect, useState } from 'react';
+// // // // // import Web3 from 'web3';
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+// // // // // function App() {
+// // // // //   const [web3, setWeb3] = useState<Web3 | null>(null);
+// // // // //   const [connectedAccount, setConnectedAccount] = useState<string | null>(null);
+// // // // //   const [isClaiming, setIsClaiming] = useState<boolean>(false);
 
-export default function Home() {
+// // // // //   // Address of the smart contract with the `claim` function
+// // // // //   const contractAddress = '0xE44c82aB05F70f172b92B7e253D0F1EDDC48A528';
+// // // // //   const contractABI = [
+// // // // //     {
+// // // // //       inputs: [],
+// // // // //       name: 'claim',
+// // // // //       outputs: [],
+// // // // //       stateMutability: 'nonpayable',
+// // // // //       type: 'function',
+// // // // //     },
+// // // // //   ];
+
+// // // // //   // Initialize Web3 and check for MetaMask
+// // // // //   useEffect(() => {
+// // // // //     if (window.ethereum) {
+// // // // //       setWeb3(new Web3(window.ethereum));
+// // // // //     } else {
+// // // // //       alert('MetaMask is required. Please install MetaMask.');
+// // // // //     }
+// // // // //   }, []);
+
+// // // // //   // Connect wallet and fetch accounts
+// // // // //   async function connectWallet() {
+// // // // //     if (!web3) return;
+
+// // // // //     try {
+// // // // //       await window.ethereum.request({ method: 'eth_requestAccounts' });
+// // // // //       const accounts = await web3.eth.getAccounts();
+// // // // //       setConnectedAccount(accounts[0]);
+// // // // //     } catch (error) {
+// // // // //       console.error('Error connecting wallet:', error);
+// // // // //     }
+// // // // //   }
+
+// // // // //   // Call the `claim` function of the contract
+// // // // //   async function claimTokens() {
+// // // // //     if (!web3 || !connectedAccount) {
+// // // // //       alert('Connect your wallet first.');
+// // // // //       return;
+// // // // //     }
+
+// // // // //     try {
+// // // // //       setIsClaiming(true);
+// // // // //       const contract = new web3.eth.Contract(contractABI, contractAddress);
+// // // // //       const tx = await contract.methods.claim().send({ from: connectedAccount });
+// // // // //       console.log('Claim transaction:', tx);
+// // // // //       alert('Tokens claimed successfully!');
+// // // // //     } catch (error) {
+// // // // //       console.error('Error claiming tokens:', error);
+// // // // //       alert('Error claiming tokens. Check the console for details.');
+// // // // //     } finally {
+// // // // //       setIsClaiming(false);
+// // // // //     }
+// // // // //   }
+
+// // // // //   return (
+// // // // //     <div
+// // // // //       style={{
+// // // // //         fontFamily: 'Arial, sans-serif',
+// // // // //         height: '100vh',
+// // // // //         display: 'flex',
+// // // // //         flexDirection: 'column',
+// // // // //         justifyContent: 'center',
+// // // // //         alignItems: 'center',
+// // // // //         position: 'relative',
+// // // // //       }}
+// // // // //     >
+// // // // //       {/* Connect Wallet Button (Top Right) */}
+// // // // //       <div style={{ position: 'absolute', top: 20, right: 20 }}>
+// // // // //         {connectedAccount ? (
+// // // // //           <span>Connected: {connectedAccount.slice(0, 6)}...{connectedAccount.slice(-4)}</span>
+// // // // //         ) : (
+// // // // //           <button
+// // // // //             onClick={connectWallet}
+// // // // //             style={{
+// // // // //               padding: '10px 20px',
+// // // // //               fontSize: '16px',
+// // // // //               cursor: 'pointer',
+// // // // //               backgroundColor: '#0070f3',
+// // // // //               color: 'white',
+// // // // //               border: 'none',
+// // // // //               borderRadius: '5px',
+// // // // //             }}
+// // // // //           >
+// // // // //             Connect Wallet
+// // // // //           </button>
+// // // // //         )}
+// // // // //       </div>
+
+// // // // //       {/* Claim Tokens Button (Center) */}
+// // // // //       {connectedAccount && (
+// // // // //         <button
+// // // // //           onClick={claimTokens}
+// // // // //           disabled={isClaiming}
+// // // // //           style={{
+// // // // //             padding: '10px 20px',
+// // // // //             fontSize: '16px',
+// // // // //             cursor: isClaiming ? 'not-allowed' : 'pointer',
+// // // // //             backgroundColor: isClaiming ? 'gray' : '#0070f3',
+// // // // //             color: 'white',
+// // // // //             border: 'none',
+// // // // //             borderRadius: '5px',
+// // // // //           }}
+// // // // //         >
+// // // // //           {isClaiming ? 'Claiming...' : 'Claim Tokens'}
+// // // // //         </button>
+// // // // //       )}
+// // // // //     </div>
+// // // // //   );
+// // // // // }
+
+// // // // // export default App;
+
+// // // // import { useEffect, useState } from 'react';
+// // // // import Web3 from 'web3';
+
+// // // // function App() {
+// // // //   const [web3, setWeb3] = useState<Web3 | null>(null);
+// // // //   const [connectedAccount, setConnectedAccount] = useState<string | null>(null);
+// // // //   const [isClaiming, setIsClaiming] = useState<boolean>(false);
+
+// // // //   const contractAddress = '0xE44c82aB05F70f172b92B7e253D0F1EDDC48A528';
+// // // //   const contractABI = [
+// // // //     {
+// // // //       inputs: [],
+// // // //       name: 'claim',
+// // // //       outputs: [],
+// // // //       stateMutability: 'nonpayable',
+// // // //       type: 'function',
+// // // //     },
+// // // //   ];
+
+// // // //   useEffect(() => {
+// // // //     if (window.ethereum) {
+// // // //       setWeb3(new Web3(window.ethereum));
+// // // //     } else {
+// // // //       alert('MetaMask is required. Please install MetaMask.');
+// // // //     }
+// // // //   }, []);
+
+// // // //   async function connectWallet() {
+// // // //     if (!web3) return;
+
+// // // //     try {
+// // // //       await window.ethereum.request({ method: 'eth_requestAccounts' });
+// // // //       const accounts = await web3.eth.getAccounts();
+// // // //       setConnectedAccount(accounts[0]);
+// // // //     } catch (error) {
+// // // //       console.error('Error connecting wallet:', error);
+// // // //     }
+// // // //   }
+
+// // // //   async function claimTokens() {
+// // // //     if (!web3 || !connectedAccount) {
+// // // //       alert('Connect your wallet first.');
+// // // //       return;
+// // // //     }
+
+// // // //     try {
+// // // //       setIsClaiming(true);
+// // // //       const contract = new web3.eth.Contract(contractABI, contractAddress);
+// // // //       const tx = await contract.methods.claim().send({ from: connectedAccount });
+// // // //       console.log('Claim transaction:', tx);
+// // // //       alert('Tokens claimed successfully!');
+// // // //     } catch (error) {
+// // // //       console.error('Error claiming tokens:', error);
+// // // //       alert('Error claiming tokens. Check the console for details.');
+// // // //     } finally {
+// // // //       setIsClaiming(false);
+// // // //     }
+// // // //   }
+
+// // // //   return (
+// // // //     <div
+// // // //       style={{
+// // // //         fontFamily: 'Arial, sans-serif',
+// // // //         height: '100vh',
+// // // //         display: 'flex',
+// // // //         flexDirection: 'column',
+// // // //         justifyContent: 'center',
+// // // //         alignItems: 'center',
+// // // //         position: 'relative',
+// // // //         backgroundColor: '#f5f5f5',
+// // // //       }}
+// // // //     >
+// // // //       <div style={{ position: 'absolute', top: 20, right: 20 }}>
+// // // //         {connectedAccount ? (
+// // // //           <span>Connected: {connectedAccount.slice(0, 6)}...{connectedAccount.slice(-4)}</span>
+// // // //         ) : (
+// // // //           <button
+// // // //             onClick={connectWallet}
+// // // //             style={{
+// // // //               padding: '10px 20px',
+// // // //               fontSize: '16px',
+// // // //               cursor: 'pointer',
+// // // //               backgroundColor: '#0070f3',
+// // // //               color: 'white',
+// // // //               border: 'none',
+// // // //               borderRadius: '5px',
+// // // //             }}
+// // // //           >
+// // // //             Connect Wallet
+// // // //           </button>
+// // // //         )}
+// // // //       </div>
+
+// // // //       {connectedAccount && (
+// // // //         <div
+// // // //           onClick={claimTokens}
+// // // //           style={{
+// // // //             cursor: 'pointer',
+// // // //             position: 'relative',
+// // // //             width: '150px',
+// // // //             height: '200px',
+// // // //             background: 'linear-gradient(145deg, #6cab62, #508b47)',
+// // // //             borderRadius: '50% / 30%',
+// // // //             display: 'flex',
+// // // //             justifyContent: 'center',
+// // // //             alignItems: 'center',
+// // // //             boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
+// // // //           }}
+// // // //         >
+// // // //           <div
+// // // //             className="avocado-pit"
+// // // //             style={{
+// // // //               width: '60px',
+// // // //               height: '60px',
+// // // //               background: 'radial-gradient(circle, #7a4f3a, #3e261a)',
+// // // //               borderRadius: '50%',
+// // // //               transform: isClaiming ? 'scale(0.8)' : 'scale(1)',
+// // // //               transition: 'transform 0.2s',
+// // // //             }}
+// // // //           ></div>
+// // // //         </div>
+// // // //       )}
+// // // //     </div>
+// // // //   );
+// // // // }
+
+// // // // export default App;
+
+// // // import { useEffect, useState } from 'react';
+// // // import Web3 from 'web3';
+
+// // // function App() {
+// // //   const [web3, setWeb3] = useState<Web3 | null>(null);
+// // //   const [connectedAccount, setConnectedAccount] = useState<string | null>(null);
+// // //   const [isClaiming, setIsClaiming] = useState<boolean>(false);
+
+// // //   const contractAddress = '0xE44c82aB05F70f172b92B7e253D0F1EDDC48A528';
+// // //   const contractABI = [
+// // //     {
+// // //       inputs: [],
+// // //       name: 'claim',
+// // //       outputs: [],
+// // //       stateMutability: 'nonpayable',
+// // //       type: 'function',
+// // //     },
+// // //   ];
+
+// // //   useEffect(() => {
+// // //     if (window.ethereum) {
+// // //       setWeb3(new Web3(window.ethereum));
+// // //     } else {
+// // //       alert('MetaMask is required. Please install MetaMask.');
+// // //     }
+// // //   }, []);
+
+// // //   async function connectWallet() {
+// // //     if (!web3) return;
+
+// // //     try {
+// // //       await window.ethereum.request({ method: 'eth_requestAccounts' });
+// // //       const accounts = await web3.eth.getAccounts();
+// // //       setConnectedAccount(accounts[0]);
+// // //     } catch (error) {
+// // //       console.error('Error connecting wallet:', error);
+// // //     }
+// // //   }
+
+// // //   async function claimTokens() {
+// // //     if (!web3 || !connectedAccount) {
+// // //       alert('Connect your wallet first.');
+// // //       return;
+// // //     }
+
+// // //     try {
+// // //       setIsClaiming(true);
+// // //       const contract = new web3.eth.Contract(contractABI, contractAddress);
+// // //       const tx = await contract.methods.claim().send({ from: connectedAccount });
+// // //       console.log('Claim transaction:', tx);
+// // //       alert('Tokens claimed successfully!');
+// // //     } catch (error) {
+// // //       console.error('Error claiming tokens:', error);
+// // //       alert('Error claiming tokens. Check the console for details.');
+// // //     } finally {
+// // //       setIsClaiming(false);
+// // //     }
+// // //   }
+
+// // //   return (
+// // //     <div
+// // //       style={{
+// // //         fontFamily: 'Arial, sans-serif',
+// // //         height: '100vh',
+// // //         display: 'flex',
+// // //         flexDirection: 'column',
+// // //         justifyContent: 'center',
+// // //         alignItems: 'center',
+// // //         position: 'relative',
+// // //         backgroundColor: '#f5f5f5',
+// // //       }}
+// // //     >
+// // //       {/* Connect Wallet Button (Top Right) */}
+// // //       <div style={{ position: 'absolute', top: 20, right: 20 }}>
+// // //         {connectedAccount ? (
+// // //           <span>Connected: {connectedAccount.slice(0, 6)}...{connectedAccount.slice(-4)}</span>
+// // //         ) : (
+// // //           <button
+// // //             onClick={connectWallet}
+// // //             style={{
+// // //               padding: '10px 20px',
+// // //               fontSize: '16px',
+// // //               cursor: 'pointer',
+// // //               backgroundColor: '#0070f3',
+// // //               color: 'white',
+// // //               border: 'none',
+// // //               borderRadius: '5px',
+// // //             }}
+// // //           >
+// // //             Connect Wallet
+// // //           </button>
+// // //         )}
+// // //       </div>
+
+// // //       {/* Avocado Button */}
+// // //       {connectedAccount && (
+// // //         <div
+// // //           onClick={claimTokens}
+// // //           style={{
+// // //             cursor: 'pointer',
+// // //             position: 'relative',
+// // //             width: '180px',
+// // //             height: '240px',
+// // //             background: 'linear-gradient(145deg, #558b44, #3a6c2f)',
+// // //             borderRadius: '50% / 30%',
+// // //             display: 'flex',
+// // //             justifyContent: 'center',
+// // //             alignItems: 'center',
+// // //             boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
+// // //           }}
+// // //         >
+// // //           {/* Greenish Yellow Flesh */}
+// // //           <div
+// // //             style={{
+// // //               width: '140px',
+// // //               height: '200px',
+// // //               background: 'radial-gradient(circle, #a5c663, #9abd3e)',
+// // //               borderRadius: '50% / 30%',
+// // //               display: 'flex',
+// // //               justifyContent: 'center',
+// // //               alignItems: 'center',
+// // //             }}
+// // //           >
+// // //             {/* Brown Pit */}
+// // //             <div
+// // //               className="avocado-pit"
+// // //               style={{
+// // //                 width: '60px',
+// // //                 height: '60px',
+// // //                 background: 'radial-gradient(circle, #7a4f3a, #3e261a)',
+// // //                 borderRadius: '50%',
+// // //                 transform: isClaiming ? 'scale(0.8)' : 'scale(1)',
+// // //                 transition: 'transform 0.2s',
+// // //               }}
+// // //             ></div>
+// // //           </div>
+// // //         </div>
+// // //       )}
+// // //     </div>
+// // //   );
+// // // }
+
+// // // export default App;
+
+
+// // import { useEffect, useState } from 'react';
+// // import Web3 from 'web3';
+
+// // function App() {
+// //   const [web3, setWeb3] = useState<Web3 | null>(null);
+// //   const [connectedAccount, setConnectedAccount] = useState<string | null>(null);
+// //   const [isClaiming, setIsClaiming] = useState<boolean>(false);
+
+// //   const contractAddress = '0xE44c82aB05F70f172b92B7e253D0F1EDDC48A528';
+// //   const contractABI = [
+// //     {
+// //       inputs: [],
+// //       name: 'claim',
+// //       outputs: [],
+// //       stateMutability: 'nonpayable',
+// //       type: 'function',
+// //     },
+// //   ];
+
+// //   useEffect(() => {
+// //     if (window.ethereum) {
+// //       setWeb3(new Web3(window.ethereum));
+// //     } else {
+// //       alert('MetaMask is required. Please install MetaMask.');
+// //     }
+// //   }, []);
+
+// //   async function connectWallet() {
+// //     if (!web3) return;
+
+// //     try {
+// //       await window.ethereum.request({ method: 'eth_requestAccounts' });
+// //       const accounts = await web3.eth.getAccounts();
+// //       setConnectedAccount(accounts[0]);
+// //     } catch (error) {
+// //       console.error('Error connecting wallet:', error);
+// //     }
+// //   }
+
+// //   async function claimTokens() {
+// //     if (!web3 || !connectedAccount) {
+// //       alert('Connect your wallet first.');
+// //       return;
+// //     }
+
+// //     try {
+// //       setIsClaiming(true);
+// //       const contract = new web3.eth.Contract(contractABI, contractAddress);
+// //       const tx = await contract.methods.claim().send({ from: connectedAccount });
+// //       console.log('Claim transaction:', tx);
+// //       alert('Tokens claimed successfully!');
+// //     } catch (error) {
+// //       console.error('Error claiming tokens:', error);
+// //       alert('Error claiming tokens. Check the console for details.');
+// //     } finally {
+// //       setIsClaiming(false);
+// //     }
+// //   }
+
+// //   return (
+// //     <div
+// //       style={{
+// //         fontFamily: 'Arial, sans-serif',
+// //         height: '100vh',
+// //         display: 'flex',
+// //         flexDirection: 'column',
+// //         justifyContent: 'center',
+// //         alignItems: 'center',
+// //         position: 'relative',
+// //         backgroundColor: '#eaf5dc',
+// //       }}
+// //     >
+// //       {/* Connect Wallet Button (Top Right) */}
+// //       <div style={{ position: 'absolute', top: 20, right: 20 }}>
+// //         {connectedAccount ? (
+// //           <span>Connected: {connectedAccount.slice(0, 6)}...{connectedAccount.slice(-4)}</span>
+// //         ) : (
+// //           <button
+// //             onClick={connectWallet}
+// //             style={{
+// //               padding: '10px 20px',
+// //               fontSize: '16px',
+// //               cursor: 'pointer',
+// //               backgroundColor: '#0070f3',
+// //               color: 'white',
+// //               border: 'none',
+// //               borderRadius: '5px',
+// //             }}
+// //           >
+// //             Connect Wallet
+// //           </button>
+// //         )}
+// //       </div>
+
+// //       {/* Pear-Shaped Avocado Button */}
+// //       {connectedAccount && (
+// //         <div
+// //           onClick={claimTokens}
+// //           style={{
+// //             cursor: 'pointer',
+// //             position: 'relative',
+// //             width: '180px',
+// //             height: '250px',
+// //             background: 'linear-gradient(145deg, #558b44, #3a6c2f)',
+// //             borderRadius: '50% 50% 50% 30% / 50% 50% 30% 30%',
+// //             display: 'flex',
+// //             justifyContent: 'center',
+// //             alignItems: 'center',
+// //             boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
+// //           }}
+// //         >
+// //           {/* Greenish Yellow Flesh */}
+// //           <div
+// //             style={{
+// //               width: '140px',
+// //               height: '200px',
+// //               background: 'radial-gradient(circle, #a5c663, #9abd3e)',
+// //               borderRadius: '50% 50% 50% 30% / 50% 50% 30% 30%',
+// //               display: 'flex',
+// //               justifyContent: 'center',
+// //               alignItems: 'center',
+// //             }}
+// //           >
+// //             {/* Brown Pit */}
+// //             <div
+// //               className="avocado-pit"
+// //               style={{
+// //                 width: '60px',
+// //                 height: '60px',
+// //                 background: 'radial-gradient(circle, #7a4f3a, #3e261a)',
+// //                 borderRadius: '50%',
+// //                 transform: isClaiming ? 'scale(0.8)' : 'scale(1)',
+// //                 transition: 'transform 0.2s',
+// //               }}
+// //             ></div>
+// //           </div>
+// //         </div>
+// //       )}
+// //     </div>
+// //   );
+// // }
+
+// // export default App;
+
+// import { useEffect, useState } from 'react';
+// import Web3 from 'web3';
+
+// function App() {
+//   const [web3, setWeb3] = useState<Web3 | null>(null);
+//   const [connectedAccount, setConnectedAccount] = useState<string | null>(null);
+//   const [isClaiming, setIsClaiming] = useState<boolean>(false);
+
+//   const contractAddress = '0xE44c82aB05F70f172b92B7e253D0F1EDDC48A528';
+//   const contractABI = [
+//     {
+//       inputs: [],
+//       name: 'claim',
+//       outputs: [],
+//       stateMutability: 'nonpayable',
+//       type: 'function',
+//     },
+//   ];
+
+//   useEffect(() => {
+//     if (window.ethereum) {
+//       setWeb3(new Web3(window.ethereum));
+//     } else {
+//       alert('MetaMask is required. Please install MetaMask.');
+//     }
+//   }, []);
+
+//   async function connectWallet() {
+//     if (!web3) return;
+
+//     try {
+//       await window.ethereum.request({ method: 'eth_requestAccounts' });
+//       const accounts = await web3.eth.getAccounts();
+//       setConnectedAccount(accounts[0]);
+//     } catch (error) {
+//       console.error('Error connecting wallet:', error);
+//     }
+//   }
+
+//   async function claimTokens() {
+//     if (!web3 || !connectedAccount) {
+//       alert('Connect your wallet first.');
+//       return;
+//     }
+
+//     try {
+//       setIsClaiming(true);
+//       const contract = new web3.eth.Contract(contractABI, contractAddress);
+//       const tx = await contract.methods.claim().send({ from: connectedAccount });
+//       console.log('Claim transaction:', tx);
+//       alert('Tokens claimed successfully!');
+//     } catch (error) {
+//       console.error('Error claiming tokens:', error);
+//       alert('Error claiming tokens. Check the console for details.');
+//     } finally {
+//       setIsClaiming(false);
+//     }
+//   }
+
+//   return (
+//     <div
+//       style={{
+//         fontFamily: 'Arial, sans-serif',
+//         height: '100vh',
+//         display: 'flex',
+//         flexDirection: 'column',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//         position: 'relative',
+//         backgroundColor: '#eaf5dc',
+//       }}
+//     >
+//       {/* Connect Wallet Button (Top Right) */}
+//       <div style={{ position: 'absolute', top: 20, right: 20 }}>
+//         {connectedAccount ? (
+//           <span>Connected: {connectedAccount.slice(0, 6)}...{connectedAccount.slice(-4)}</span>
+//         ) : (
+//           <button
+//             onClick={connectWallet}
+//             style={{
+//               padding: '10px 20px',
+//               fontSize: '16px',
+//               cursor: 'pointer',
+//               backgroundColor: '#0070f3',
+//               color: 'white',
+//               border: 'none',
+//               borderRadius: '5px',
+//             }}
+//           >
+//             Connect Wallet
+//           </button>
+//         )}
+//       </div>
+
+//       {/* Realistic Avocado Button */}
+//       {connectedAccount && (
+//         <div
+//           onClick={claimTokens}
+//           style={{
+//             cursor: 'pointer',
+//             position: 'relative',
+//             width: '160px',
+//             height: '240px',
+//             background: 'linear-gradient(145deg, #558b44, #3a6c2f)',
+//             borderRadius: '50% 50% 40% 40% / 60% 60% 40% 40%',
+//             display: 'flex',
+//             justifyContent: 'center',
+//             alignItems: 'center',
+//             boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
+//           }}
+//         >
+//           {/* Greenish Yellow Flesh */}
+//           <div
+//             style={{
+//               width: '120px',
+//               height: '200px',
+//               background: 'radial-gradient(circle, #a5c663, #9abd3e)',
+//               borderRadius: '50% 50% 40% 40% / 60% 60% 40% 40%',
+//               display: 'flex',
+//               justifyContent: 'center',
+//               alignItems: 'center',
+//             }}
+//           >
+//             {/* Brown Pit */}
+//             <div
+//               className="avocado-pit"
+//               style={{
+//                 width: '50px',
+//                 height: '50px',
+//                 background: 'radial-gradient(circle, #7a4f3a, #3e261a)',
+//                 borderRadius: '50%',
+//                 transform: isClaiming ? 'scale(0.8)' : 'scale(1)',
+//                 transition: 'transform 0.2s',
+//               }}
+//             ></div>
+//           </div>
+//         </div>
+//       )}
+//     </div>
+//   );
+// }
+
+// export default App;
+
+import { useEffect, useState } from 'react';
+import Web3 from 'web3';
+
+function App() {
+  const [web3, setWeb3] = useState<Web3 | null>(null);
+  const [connectedAccount, setConnectedAccount] = useState<string | null>(null);
+  const [isClaiming, setIsClaiming] = useState<boolean>(false);
+  const [message, setMessage] = useState<string | null>(null); // Message state
+
+  const contractAddress = '0xE44c82aB05F70f172b92B7e253D0F1EDDC48A528';
+  const contractABI = [
+    {
+      inputs: [],
+      name: 'claim',
+      outputs: [],
+      stateMutability: 'nonpayable',
+      type: 'function',
+    },
+  ];
+
+  useEffect(() => {
+    if (window.ethereum) {
+      setWeb3(new Web3(window.ethereum));
+    } else {
+      alert('MetaMask is required. Please install MetaMask.');
+    }
+  }, []);
+
+  async function connectWallet() {
+    if (!web3) return;
+
+    try {
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const accounts = await web3.eth.getAccounts();
+      setConnectedAccount(accounts[0]);
+    } catch (error) {
+      console.error('Error connecting wallet:', error);
+    }
+  }
+
+  async function claimTokens() {
+    if (!web3 || !connectedAccount) {
+      setMessage('Connect your wallet first.');
+      fadeMessage();
+      return;
+    }
+
+    try {
+      setIsClaiming(true);
+      const contract = new web3.eth.Contract(contractABI, contractAddress);
+      await contract.methods.claim().send({ from: connectedAccount });
+      setMessage('Tokens claimed successfully!');
+    } catch (error) {
+      console.error('Error claiming tokens:', error);
+      setMessage('Error claiming tokens. Check the console for details.');
+    } finally {
+      setIsClaiming(false);
+      fadeMessage();
+    }
+  }
+
+  function fadeMessage() {
+    setTimeout(() => {
+      setMessage(null);
+    }, 3000); // Fades the message after 3 seconds
+  }
+
   return (
     <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
+      style={{
+        fontFamily: 'Arial, sans-serif',
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative',
+        backgroundColor: '#eaf5dc',
+      }}
     >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              pages/index.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+      {/* Connect Wallet Button (Top Right) */}
+      <div style={{ position: 'absolute', top: 20, right: 20 }}>
+        {connectedAccount ? (
+          <span>Connected: {connectedAccount.slice(0, 6)}...{connectedAccount.slice(-4)}</span>
+        ) : (
+          <button
+            onClick={connectWallet}
+            style={{
+              padding: '10px 20px',
+              fontSize: '16px',
+              cursor: 'pointer',
+              backgroundColor: '#0070f3',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+            }}
+          >
+            Connect Wallet
+          </button>
+        )}
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      {/* Realistic Avocado Button */}
+      {connectedAccount && (
+        <div
+          onClick={claimTokens}
+          style={{
+            cursor: 'pointer',
+            position: 'relative',
+            width: '160px',
+            height: '240px',
+            background: 'linear-gradient(145deg, #558b44, #3a6c2f)',
+            borderRadius: '50% 50% 40% 40% / 60% 60% 40% 40%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            boxShadow: '0px 10px 20px rgba(0, 0, 0, 0.2)',
+          }}
+        >
+          {/* Greenish Yellow Flesh */}
+          <div
+            style={{
+              width: '120px',
+              height: '200px',
+              background: 'radial-gradient(circle, #a5c663, #9abd3e)',
+              borderRadius: '50% 50% 40% 40% / 60% 60% 40% 40%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            {/* Brown Pit with Hover Shake */}
+            <div
+              className="avocado-pit"
+              style={{
+                width: '50px',
+                height: '50px',
+                background: 'radial-gradient(circle, #7a4f3a, #3e261a)',
+                borderRadius: '50%',
+                transform: isClaiming ? 'scale(0.8)' : 'scale(1)',
+                transition: 'transform 0.2s',
+                animation: 'shake 0.5s infinite',
+                animationPlayState: 'paused', // Default paused
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.animationPlayState = 'running')}
+              onMouseLeave={(e) => (e.currentTarget.style.animationPlayState = 'paused')}
+            ></div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      )}
+
+      {/* Fading Message */}
+      {message && (
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '20px',
+            background: '#ffffff',
+            color: '#333',
+            padding: '10px 20px',
+            borderRadius: '8px',
+            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+            opacity: message ? 1 : 0,
+            transition: 'opacity 1s',
+          }}
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          {message}
+        </div>
+      )}
+
+      {/* Keyframe for Shake Animation */}
+      <style>
+        {`
+          @keyframes shake {
+            0%, 100% {
+              transform: translateX(0);
+            }
+            25% {
+              transform: translateX(-2px);
+            }
+            50% {
+              transform: translateX(2px);
+            }
+            75% {
+              transform: translateX(-2px);
+            }
+          }
+        `}
+      </style>
     </div>
   );
 }
+
+export default App;
