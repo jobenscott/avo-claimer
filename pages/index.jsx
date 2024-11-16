@@ -701,12 +701,28 @@ function App() {
   ];
 
   useEffect(() => {
-    if (window.ethereum) {
-      setWeb3(new Web3(window.ethereum));
-    } else {
-      alert('MetaMask is required. Please install MetaMask.');
-    }
+    const initializeWeb3 = async (attempts = 3) => {
+      if (attempts === 0) {
+        console.error("Failed to initialize Web3 after multiple attempts.");
+        return;
+      }
+  
+      try {
+        if (window.ethereum) {
+          setWeb3(new Web3(window.ethereum));
+          console.log("Web3 initialized successfully.");
+        } else {
+          console.warn("Ethereum wallet not detected.");
+        }
+      } catch (error) {
+        console.error("Error initializing Web3, retrying...", error);
+        setTimeout(() => initializeWeb3(attempts - 1), 1000); // Retry after 1 second
+      }
+    };
+  
+    initializeWeb3();
   }, []);
+  
 
   async function connectWallet() {
     if (!web3) return;
