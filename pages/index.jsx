@@ -701,27 +701,46 @@ function App() {
   ];
 
   useEffect(() => {
-    const initializeWeb3 = async (attempts = 3) => {
-      if (attempts === 0) {
-        console.error("Failed to initialize Web3 after multiple attempts.");
-        return;
-      }
+    const initializeWeb3 = async () => {
+      const RPC_URL = "https://mainnet.evm.nodes.onflow.org";
+      const CHAIN_ID = "0x2EB"; // Chain ID 747 in hexadecimal
   
       try {
         if (window.ethereum) {
+          // Request to switch to the Flow EVM network if MetaMask is available
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: CHAIN_ID,
+                chainName: "Flow EVM",
+                rpcUrls: [RPC_URL],
+                nativeCurrency: {
+                  name: "FLOW",
+                  symbol: "FLOW",
+                  decimals: 18,
+                },
+                blockExplorerUrls: ["https://evm.flowscan.io"],
+              },
+            ],
+          });
+  
           setWeb3(new Web3(window.ethereum));
-          console.log("Web3 initialized successfully.");
+          console.log("Web3 initialized using MetaMask.");
         } else {
-          console.warn("Ethereum wallet not detected.");
+          // Fallback to direct RPC for non-MetaMask users
+          const provider = new Web3.providers.HttpProvider(RPC_URL);
+          setWeb3(new Web3(provider));
+          console.log("Web3 initialized using direct RPC.");
         }
       } catch (error) {
-        console.error("Error initializing Web3, retrying...", error);
-        setTimeout(() => initializeWeb3(attempts - 1), 1000); // Retry after 1 second
+        console.error("Error initializing Web3:", error);
       }
     };
   
     initializeWeb3();
   }, []);
+  
   
 
   async function connectWallet() {
