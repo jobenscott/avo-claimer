@@ -2908,8 +2908,8 @@ function Raffle() {
       const estimatedGas = await contract.methods.playRaffle().estimateGas({ from: connectedAccount });
       const gasPrice = await web3.eth.getGasPrice();
 
-      const adjustedGas = Math.ceil(Number(estimatedGas) * 1.2);
-      const adjustedGasPrice = Math.ceil(Number(gasPrice) * 1.1);
+      const adjustedGas = Math.ceil(Number(estimatedGas) * 1.4);
+      const adjustedGasPrice = Math.ceil(Number(gasPrice) * 1.3);
 
       const tx = await contract.methods.playRaffle().send({
         from: connectedAccount,
@@ -3022,7 +3022,7 @@ function Raffle() {
         spendTokenAllowance < spendAmount ? (
           <>
             <p>Please approve spending AVO to play the raffle.</p>
-            <span style={{fontSize: 10}}>(10,000 AVO is default for approval to allow for 10,000 tries before having to approve again. Please adjust as you see fit.)</span>
+            <span style={{fontSize: 10}}>(10,000 AVO has been chosen as default for approval to allow for 10,000 tries before having to approve again. Please adjust as you see fit.)</span>
             <button
               onClick={approveToken}
               style={{
