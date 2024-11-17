@@ -2931,8 +2931,8 @@ async function getAllowance() {
       const estimatedGas = await contract.methods.playRaffle().estimateGas({ from: connectedAccount });
       const gasPrice = await web3.eth.getGasPrice();
 
-      const adjustedGas = Math.ceil(Number(estimatedGas) * 1.4);
-      const adjustedGasPrice = Math.ceil(Number(gasPrice) * 1.3);
+      const adjustedGas = Math.ceil(Number(estimatedGas) * 1.5);
+      const adjustedGasPrice = Math.ceil(Number(gasPrice) * 1.4);
 
       const tx = await contract.methods.playRaffle().send({
         from: connectedAccount,
