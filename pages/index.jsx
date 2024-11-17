@@ -761,9 +761,15 @@ function App() {
     >
       {/* <Navbar /> */}
       <Navbar connectedAccount={connectedAccount} onConnect={connectWallet} />
-      <p style={{textAlign: "center", marginBottom: 12}}>
-        Click the pit to earn <strong>1 AVO</strong>!<br />
-      </p>
+      {connectedAccount ? (
+        <p style={{textAlign: "center", marginBottom: 12, color: "black"}}>
+          Click the pit to earn <strong>1 AVO</strong>!<br />
+        </p>
+      ) : (
+        <p style={{textAlign: "center", marginBottom: 12, color: "black"}}>
+          Connect your wallet to use the faucet!<br />
+        </p>
+      )}
       {/* Connect Wallet Button (Top Right)
       <div style={{ position: 'absolute', top: 20, right: 20 }}>
         {connectedAccount ? (

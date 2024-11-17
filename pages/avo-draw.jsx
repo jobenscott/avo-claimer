@@ -3047,6 +3047,12 @@ async function getAllowance() {
   </p>
 </div>
 
+{!connectedAccount && (
+        <p style={{ color: "#000000" }}>
+          Connect your wallet to take a chance!
+        </p>
+)}
+
 
       {/* Connect Wallet */}
       {/* <div style={{ position: "absolute", top: 20, right: 20 }}>
