@@ -2784,6 +2784,7 @@
 
 import { useEffect, useState } from "react";
 import Web3 from "web3";
+import Navbar from "../components/Navbar";
 
 function Raffle() {
   const [web3, setWeb3] = useState(null);
@@ -2797,6 +2798,7 @@ function Raffle() {
   const tokenMapping = {
     "0x995258Cea49C25595CD94407FaD9E99B81406A84": "AVO",
     "0x6a2cD141d75864944318acf272443FEBC54855a9": "VINYL",
+    "0xd8Ad8AE8375aa31BFF541e17dC4b4917014EbDAa": "BETA"
   };
 
   const contractAddress = "0x4abAB4A5da6e113B1a1B8942375A117870472370";
@@ -2994,6 +2996,8 @@ async function getAllowance() {
         backgroundColor: "#eaf5dc",
       }}
     >
+      {/* <Navbar /> */}
+      <Navbar connectedAccount={connectedAccount} onConnect={connectWallet} />
       <style>
         {`
           @keyframes shake {
@@ -3035,7 +3039,7 @@ async function getAllowance() {
   <p>
     Spend <strong>1 AVO</strong> for an 80% chance to win!<br />
     Prizes include <strong>1, 10, 100, or 1000 tokens</strong> of{" "}
-    <strong>AVO</strong> or <strong>VINYL</strong>.
+    <strong>AVO</strong>, <strong>VINYL</strong>, or  <strong>BETA</strong>.
     <br />
     <span style={{ fontSize: "14px", fontStyle: "italic" }}>
       (More tokens coming soon!)
@@ -3045,7 +3049,7 @@ async function getAllowance() {
 
 
       {/* Connect Wallet */}
-      <div style={{ position: "absolute", top: 20, right: 20 }}>
+      {/* <div style={{ position: "absolute", top: 20, right: 20 }}>
         {connectedAccount ? (
           <span>Connected: {connectedAccount.slice(0, 6)}...{connectedAccount.slice(-4)}</span>
         ) : (
@@ -3057,12 +3061,13 @@ async function getAllowance() {
               backgroundColor: "#0070f3",
               color: "white",
               borderRadius: "5px",
+              zIndex: 100,
             }}
           >
             Connect Wallet
           </button>
         )}
-      </div>
+      </div> */}
 
       {/* Approve or Play */}
       {connectedAccount && (
@@ -3126,7 +3131,7 @@ async function getAllowance() {
                   background: "radial-gradient(circle, #7a4f3a, #3e261a)",
                   borderRadius: "50%",
                   transform: pitFallen
-                    ? "translateY(300px)"
+                    ? "translateY(100px)"
                     : isPlaying
                     ? "translateY(0)"
                     : "translateY(0)",

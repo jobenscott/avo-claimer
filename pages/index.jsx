@@ -682,6 +682,7 @@
 
 import { useEffect, useState } from 'react';
 import Web3 from 'web3';
+import Navbar from '../components/Navbar';
 
 function App() {
   const [web3, setWeb3] = useState(null);
@@ -758,7 +759,12 @@ function App() {
         backgroundColor: '#eaf5dc',
       }}
     >
-      {/* Connect Wallet Button (Top Right) */}
+      {/* <Navbar /> */}
+      <Navbar connectedAccount={connectedAccount} onConnect={connectWallet} />
+      <p style={{textAlign: "center", marginBottom: 12}}>
+        Click the pit to earn <strong>1 AVO</strong>!<br />
+      </p>
+      {/* Connect Wallet Button (Top Right)
       <div style={{ position: 'absolute', top: 20, right: 20 }}>
         {connectedAccount ? (
           <span>Connected: {connectedAccount.slice(0, 6)}...{connectedAccount.slice(-4)}</span>
@@ -773,12 +779,13 @@ function App() {
               color: 'white',
               border: 'none',
               borderRadius: '5px',
+              zIndex: 100,
             }}
           >
             Connect Wallet
           </button>
         )}
-      </div>
+      </div> */}
 
       {/* Realistic Avocado Button */}
       {connectedAccount && (
