@@ -2843,31 +2843,52 @@ function Raffle() {
     }
   }, []);
 
+  useEffect(() => {
+    if (web3 && connectedAccount) {
+      console.log("Web3 and account are ready, fetching allowance...");
+      getAllowance();
+    }
+  }, [web3, connectedAccount]);
+  
+
   async function connectWallet() {
     if (!web3) return;
 
     try {
       await window.ethereum.request({ method: "eth_requestAccounts" });
       const accounts = await web3.eth.getAccounts();
-      setConnectedAccount(accounts[0]);
-      await getAllowance();
+      await setConnectedAccount(accounts[0]);
+    //   await getAllowance();
     } catch (error) {
       console.error("Error connecting wallet:", error);
       setResultMessage("Error connecting wallet.");
     }
   }
 
-  async function getAllowance() {
-    if (!web3 || !connectedAccount) return;
+//   async function getAllowance() {
+//     if (!web3 || !connectedAccount) return;
 
+//     try {
+//       const tokenContract = new web3.eth.Contract(tokenABI, spendingTokenAddress);
+//       const allowance = await tokenContract.methods.allowance(connectedAccount, contractAddress).call();
+//       setSpendTokenAllowance(Number(allowance));
+//     } catch (error) {
+//       console.error("Error fetching allowance:", error);
+//     }
+//   }
+async function getAllowance() {
+    if (!web3 || !connectedAccount) return;
+  
     try {
       const tokenContract = new web3.eth.Contract(tokenABI, spendingTokenAddress);
       const allowance = await tokenContract.methods.allowance(connectedAccount, contractAddress).call();
+      console.log("Fetched allowance:", allowance);
       setSpendTokenAllowance(Number(allowance));
     } catch (error) {
       console.error("Error fetching allowance:", error);
     }
   }
+  
 
   async function approveToken() {
     if (!web3 || !connectedAccount) return;
