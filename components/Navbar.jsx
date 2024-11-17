@@ -575,6 +575,7 @@ function Navbar({ connectedAccount, onConnect }) {
           style={{
             cursor: "pointer",
             fontSize: "28px",
+            color: "black"
           }}
           onClick={toggleMenu}
         >
