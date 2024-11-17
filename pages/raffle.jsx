@@ -2990,12 +2990,38 @@ function Raffle() {
       </style>
 
       {/* Explanation */}
-      <div style={{ marginBottom: "20px", textAlign: "center" }}>
+      {/* <div style={{ marginBottom: "20px", textAlign: "center" }}>
         <p>
           Spend <strong>1 AVO</strong> for an 80% chance to win!<br />
           Prizes include 1, 10, 100, or 1000 tokens of <strong>AVO</strong> or <strong>VINYL</strong>.
         </p>
-      </div>
+      </div> */}
+      {/* Explanation */}
+<div
+  style={{
+    marginBottom: "20px",
+    textAlign: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.7)", // Semi-transparent background for contrast
+    color: "#ffffff", // Bright white text for visibility
+    padding: "15px 20px", // Spacing for readability
+    borderRadius: "8px", // Rounded corners for aesthetics
+    fontSize: "18px", // Larger font size
+    lineHeight: "1.6", // Increased line height for readability
+    maxWidth: "90%", // Ensures it fits well on smaller screens
+    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)", // Subtle shadow for a polished look
+  }}
+>
+  <p>
+    Spend <strong>1 AVO</strong> for an 80% chance to win!<br />
+    Prizes include <strong>1, 10, 100, or 1000 tokens</strong> of{" "}
+    <strong>AVO</strong> or <strong>VINYL</strong>.
+    <br />
+    <span style={{ fontSize: "14px", fontStyle: "italic" }}>
+      (More tokens coming soon!)
+    </span>
+  </p>
+</div>
+
 
       {/* Connect Wallet */}
       <div style={{ position: "absolute", top: 20, right: 20 }}>
