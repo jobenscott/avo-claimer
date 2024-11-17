@@ -3046,9 +3046,16 @@ function Raffle() {
       {/* Approve or Play */}
       {connectedAccount && (
         spendTokenAllowance < spendAmount ? (
-          <>
-            <p>Please approve spending AVO to play the raffle.</p>
-            <span style={{fontSize: 10}}>(10,000 AVO has been chosen as default for approval to allow for 10,000 tries before having to approve again. Please adjust as you see fit.)</span>
+            <>
+            <p style={{ color: "#000000" }}>Please approve spending AVO to play the raffle.</p>
+            <span
+              style={{
+                fontSize: "10px",
+                color: "#000000", // Explicitly set text color to black
+              }}
+            >
+              (10,000 AVO has been chosen as default for approval to allow for 10,000 tries before having to approve again. Please adjust as you see fit.)
+            </span>
             <button
               onClick={approveToken}
               style={{
@@ -3056,12 +3063,13 @@ function Raffle() {
                 fontSize: "16px",
                 backgroundColor: "#ffc107",
                 borderRadius: "5px",
-                marginTop: 8
+                marginTop: "8px",
               }}
             >
               Approve Token
             </button>
           </>
+          
         ) : (
           <div
             style={{
